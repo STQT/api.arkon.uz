@@ -328,3 +328,4 @@ dump.rdb
 apps/media/
 
 .pytest_cache/
+.env
