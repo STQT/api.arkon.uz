@@ -6,11 +6,11 @@ from imagekit.models import ImageSpecField
 class Brand(models.Model):
     name = models.CharField("Название", max_length=100)
     description = RichTextField(verbose_name="Описание")
-    logo = models.ImageField(verbose_name="Логотип")
+    logo = models.ImageField(verbose_name="Логотип", upload_to="stones/brand")
     logo_thumbnail = ImageSpecField(source='logo',
                                     format='JPEG',
                                     options={'quality': 60})
-    image = models.ImageField(verbose_name="Изображение")
+    image = models.ImageField(verbose_name="Изображение", upload_to="stones/brand")
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
                                      options={'quality': 60})
@@ -26,7 +26,7 @@ class Brand(models.Model):
 class Category(models.Model):
     brand = models.ForeignKey(Brand, verbose_name="Бренд", related_name="categories", on_delete=models.CASCADE)
     name = models.CharField(verbose_name="Название", max_length=100)
-    image = models.ImageField(verbose_name="Изображение")
+    image = models.ImageField(verbose_name="Изображение", upload_to="stones/categories")
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
                                      options={'quality': 60})
@@ -42,7 +42,7 @@ class Category(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.CASCADE, related_name="products")
     name = models.CharField(verbose_name="Название", max_length=100)
-    image = models.ImageField(verbose_name="Изображение")
+    image = models.ImageField(verbose_name="Изображение", upload_to="stones/products")
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
                                      options={'quality': 60})
