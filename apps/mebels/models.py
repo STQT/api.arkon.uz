@@ -65,7 +65,6 @@ class ProductShots(models.Model):
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
                                      options={'quality': 60})
-    arkon_url = models.CharField(verbose_name="Ссылка на AR", max_length=255)
 
     class Meta:
         verbose_name = "Изображение продукта "
