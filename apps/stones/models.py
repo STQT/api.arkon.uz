@@ -8,7 +8,11 @@ class Brand(models.Model):
     description = RichTextField(verbose_name="Описание")
     logo = models.ImageField(verbose_name="Логотип", upload_to="stones/brand")
     logo_thumbnail = ImageSpecField(source='logo',
-                                    format='JPEG',
+                                    format='PNG',
+                                    options={'quality': 60})
+    logo_light = models.ImageField(verbose_name="Логотип для светлой версии", upload_to="stones/brand")
+    logo_light_thumbnail = ImageSpecField(source='logo_light',
+                                    format='PNG',
                                     options={'quality': 60})
     image = models.ImageField(verbose_name="Изображение", upload_to="stones/brand")
     image_thumbnail = ImageSpecField(source='image',
