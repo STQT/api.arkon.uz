@@ -18,6 +18,10 @@ class Brand(models.Model):
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
                                      options={'quality': 60})
+    is_album = models.BooleanField(verbose_name="Альбомные изображения?",
+                                   help_text="Если изображения на странице должны быть показаны "
+                                             "как албьомные фото, то отметьте галочкой",
+                                   default=True)
 
     class Meta:
         verbose_name = "Бренд "
