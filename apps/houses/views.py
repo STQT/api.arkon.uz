@@ -1,12 +1,7 @@
 from rest_framework import generics
 
-from .models import Product, Brand
-from .serializers import ProductSerializer, BrandRetrieveSerializer, BrandSerializer
-
-
-class ProductAPIRetrieveView(generics.RetrieveAPIView): # noqa
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+from .models import Brand
+from .serializers import BrandRetrieveSerializer, BrandSerializer
 
 
 class BrandRetrieveAPIView(generics.RetrieveAPIView):

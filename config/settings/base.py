@@ -83,12 +83,14 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "drf_spectacular",
     "ckeditor",
+    "ckeditor_uploader",
 ]
 
 LOCAL_APPS = [
     "apps.users",
     "apps.stones",
-    "apps.furniture",
+    "apps.mebels",
+    "apps.houses",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -253,7 +255,6 @@ LOGGING = {
     "root": {"level": "INFO", "handlers": ["console"]},
 }
 
-
 # django-rest-framework
 # -------------------------------------------------------------------------------
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
@@ -329,6 +330,7 @@ CKEDITOR_CONFIGS = {
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
+            'uploadimage',
             'div',
             'autolink',
             'autoembed',
@@ -454,3 +456,12 @@ JAZZMIN_SETTINGS = {
     # Add a language dropdown into the admin
     "language_chooser": False,
 }
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+def get_filename(filename, request):
+    return filename.upper()
+
+
+CKEDITOR_FILENAME_GENERATOR = 'config.settings.base.get_filename'
+CKEDITOR_FORCE_JPEG_COMPRESSION = True

@@ -9,8 +9,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    # Django Admin, use {% url 'admin:index' %}
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
