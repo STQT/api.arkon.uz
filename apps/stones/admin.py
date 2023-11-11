@@ -72,7 +72,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
     def image_preview(self, obj):
         return mark_safe(
-            f'<img src="{obj.image.url}" width="50" height="50" />'  # if obj.image else '<div>Rasmsiz</div>'
+            f'<img src="{obj.image.url}" width="200"/>'  # if obj.image else '<div>Rasmsiz</div>'
         )
 
     image_preview.short_description = 'Фото'
