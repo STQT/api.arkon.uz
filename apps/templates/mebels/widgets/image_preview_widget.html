@@ -1,0 +1,9 @@
+<div class="image-preview-widget">
+  {% if widget.value %}
+    <img src="{{ widget.value.url }}" alt="Image Preview" style="max-width: 100px; max-height: 100px;">
+  {% endif %}
+  {{ widget.clear_input }}
+  {{ widget.input }}
+  <br>
+  {{ widget.clear_checkbox }} {{ widget.clear_label }}
+</div>

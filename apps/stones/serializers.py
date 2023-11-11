@@ -29,6 +29,7 @@ class CategoryRetrieveSerializer(serializers.ModelSerializer):
 class BrandSerializer(serializers.ModelSerializer):
     logo_thumbnail = serializers.ImageField()
     image_thumbnail = serializers.ImageField()
+    logo_light_thumbnail = serializers.ImageField()
 
     class Meta:
         model = Brand
@@ -50,19 +51,24 @@ class CharacteristicSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    characteristics = CharacteristicSerializer(many=True)
+    characteristics = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = "__all__"
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        grouped_characteristics = {}
-        for characteristic in data['characteristics']:
-            type_key = characteristic['name']
-            if type_key not in grouped_characteristics:
-                grouped_characteristics[type_key] = []
-            grouped_characteristics[type_key].append(characteristic)
-        data['grouped_characteristics'] = grouped_characteristics
-        return data
+    def get_characteristics(self, obj):
+        characteristics_by_type = {
+            "main": [],
+            "standart": [],
+            "test": []
+        }
+
+        for characteristic in obj.characteristics.all():
+            type_key = characteristic.type
+            if type_key not in characteristics_by_type:
+                characteristics_by_type[type_key] = []
+
+            characteristics_by_type[type_key].append(CharacteristicSerializer(characteristic).data)
+
+        return characteristics_by_type
