@@ -7,9 +7,12 @@ from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 
+from apps.stones.views import duplicate_product
+
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('duplicate_brand_product/<int:product_id>', duplicate_product, name="duplicate_stones_product"),
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
