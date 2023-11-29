@@ -29,5 +29,5 @@ urlpatterns += [
     path("mebels/brand/<int:pk>/", mebel_views.BrandRetrieveAPIView.as_view()),
     path("houses/brand-list/", house_views.BrandListAPIView.as_view()),
     path("houses/brand/<int:pk>/", house_views.BrandRetrieveAPIView.as_view()),
-    path("categories", category_views.CategoryAPIListView.as_view()),
+    path("categories/", category_views.CategoryAPIListView.as_view()),
 ]

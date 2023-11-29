@@ -42,7 +42,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ['name', 'logo_preview']
+    list_display = ['name', 'logo_preview', 'category']
 
     def logo_preview(self, obj):
         return mark_safe(

@@ -8,7 +8,7 @@ from apps.categories.models import Category
 class Brand(models.Model):
     name = models.CharField("Название", max_length=100)
     phone = models.CharField("Телефон", max_length=50)
-    category = models.ForeignKey(Category, verbose_name="Категория", related_name="brands",
+    category = models.ForeignKey(Category, verbose_name="Категория", related_name="houses",
                                  null=True, blank=True,
                                  on_delete=models.SET_NULL)
     content = RichTextUploadingField()
