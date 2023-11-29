@@ -2,9 +2,14 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField
 
+from apps.categories.models import Category
+
 
 class Brand(models.Model):
     name = models.CharField("Название", max_length=100)
+    category = models.ForeignKey(Category, verbose_name="Категория", related_name="stones",
+                                 null=True, blank=True,
+                                 on_delete=models.SET_NULL)
     description = RichTextField(verbose_name="Описание")
     logo = models.ImageField(verbose_name="Логотип", upload_to="stones/brand")
     logo_thumbnail = ImageSpecField(source='logo',

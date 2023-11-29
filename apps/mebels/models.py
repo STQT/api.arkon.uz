@@ -1,9 +1,14 @@
 from django.db import models
 from imagekit.models import ImageSpecField
 
+from apps.categories.models import Category
+
 
 class Brand(models.Model):
     name = models.CharField("Название", max_length=100)
+    category = models.ForeignKey(Category, verbose_name="Категория", related_name="mebels",
+                                 null=True, blank=True,
+                                 on_delete=models.SET_NULL)
     slogan = models.CharField("Девиз", max_length=50)
     logo = models.ImageField(verbose_name="Логотип", upload_to="mebels/brand")
     logo_thumbnail = ImageSpecField(source='logo',
