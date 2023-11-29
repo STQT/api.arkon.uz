@@ -35,6 +35,16 @@ class BrandSerializer(serializers.ModelSerializer):
         model = Brand
         fields = "__all__"
 
+    def get_type(self, obj):
+        if obj.category.mebels.exists():
+            return 'mebels'
+        elif obj.category.stones.exists():
+            return 'stones'
+        elif obj.category.houses.exists():
+            return 'houses'
+        else:
+            return None
+
 
 class BrandRetrieveSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True)
