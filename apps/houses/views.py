@@ -12,3 +12,4 @@ class BrandRetrieveAPIView(generics.RetrieveAPIView):
 class BrandListAPIView(generics.ListAPIView):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
+    filterset_fields = ("category_id",)

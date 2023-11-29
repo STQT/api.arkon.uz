@@ -19,3 +19,4 @@ drf-spectacular==0.26.5  # https://github.com/tfranzel/drf-spectacular
 django-ckeditor==6.7.0
 django-imagekit==5.0.0
 django-jazzmin==2.6.0
+django-filter==23.4
