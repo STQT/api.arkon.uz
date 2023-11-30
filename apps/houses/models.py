@@ -17,10 +17,6 @@ class Brand(models.Model):
     logo_thumbnail = ImageSpecField(source='logo',
                                     format='PNG',
                                     options={'quality': 60})
-    logo_light = models.ImageField(verbose_name="Логотип для светлой версии", upload_to="stones/brand")
-    logo_light_thumbnail = ImageSpecField(source='logo_light',
-                                          format='PNG',
-                                          options={'quality': 60})
     image = models.ImageField(verbose_name="Изображение", upload_to="mebels/brand")
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
