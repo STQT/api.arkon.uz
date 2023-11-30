@@ -59,7 +59,7 @@ class BrandAdmin(admin.ModelAdmin):
 
     def logo_preview(self, obj):
         return mark_safe(
-            f'<img src="{obj.logo_light.url}" width="200"/>'  # if obj.logo_light else '<div>Rasmsiz</div>'
+            f'<img src="{obj.logo.url}" width="200"/>'  # if obj.logo_light else '<div>Rasmsiz</div>'
         )
 
     logo_preview.short_description = 'Фото'
