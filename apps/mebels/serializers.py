@@ -40,7 +40,6 @@ class ProductSerializer(serializers.ModelSerializer):
 class BrandRetrieveSerializer(serializers.ModelSerializer):
     logo_thumbnail = serializers.ImageField()
     image_thumbnail = serializers.ImageField()
-    logo_light_thumbnail = serializers.ImageField()
     products = ProductSerializer(many=True)
 
     class Meta:
