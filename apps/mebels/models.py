@@ -25,7 +25,6 @@ class Brand(models.Model):
                                      format='JPEG',
                                      options={'quality': 60})
 
-
     class Meta:
         verbose_name = "Бренд "
         verbose_name_plural = "Бренды "
@@ -35,22 +34,24 @@ class Brand(models.Model):
 
 
 class Product(models.Model):
-    brend = models.ForeignKey(Brand, verbose_name="Бренд", on_delete=models.CASCADE, related_name="products")
+    brand = models.ForeignKey(Brand, verbose_name="Бренд", on_delete=models.CASCADE, related_name="products")
     name = models.CharField(verbose_name="Название", max_length=100)
     image = models.ImageField(verbose_name="Изображение на главной", upload_to="mebels/products")
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
                                      options={'quality': 60})
 
-    image2 = models.ImageField(verbose_name="Изображение на главной 2", upload_to="mebels/products", blank=True, null=True)
+    image2 = models.ImageField(verbose_name="Изображение на главной 2", upload_to="mebels/products", blank=True,
+                               null=True)
     image_thumbnail2 = ImageSpecField(source='image2',
-                                     format='JPEG',
-                                     options={'quality': 60})
+                                      format='JPEG',
+                                      options={'quality': 60})
 
-    image3 = models.ImageField(verbose_name="Изображение на главной 3", upload_to="mebels/products", blank=True, null=True)
+    image3 = models.ImageField(verbose_name="Изображение на главной 3", upload_to="mebels/products", blank=True,
+                               null=True)
     image_thumbnail3 = ImageSpecField(source='image3',
-                                     format='JPEG',
-                                     options={'quality': 60})
+                                      format='JPEG',
+                                      options={'quality': 60})
 
     arkon_url = models.CharField(verbose_name="Ссылка на AR", max_length=255)
     is_album = models.BooleanField(verbose_name="Альбомные изображения?",
