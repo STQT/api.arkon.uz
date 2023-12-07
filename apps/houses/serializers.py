@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Brand
+from ..utils.serializers import AddressSerializer
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -25,6 +26,7 @@ class BrandSerializer(serializers.ModelSerializer):
 class BrandRetrieveSerializer(serializers.ModelSerializer):
     logo_thumbnail = serializers.ImageField()
     image_thumbnail = serializers.ImageField()
+    brand_data = AddressSerializer(source="*")
 
     class Meta:
         model = Brand

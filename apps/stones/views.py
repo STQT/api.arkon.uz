@@ -24,7 +24,7 @@ class BrandListAPIView(generics.ListAPIView):
 
 
 class CategoryRetrieveAPIView(generics.RetrieveAPIView):
-    queryset = Category.objects.all()
+    queryset = Category.objects.select_related("brand")
     serializer_class = CategoryRetrieveSerializer
 
 

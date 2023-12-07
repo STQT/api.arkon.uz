@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Product, Characteristic, Category, Brand
+from ..utils.serializers import AddressSerializer
 
 
 class ProductListSerializer(serializers.ModelSerializer):
@@ -20,6 +21,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CategoryRetrieveSerializer(serializers.ModelSerializer):
     products = ProductListSerializer(many=True)
+    brand_data = AddressSerializer(source="brand")
 
     class Meta:
         model = Category
@@ -48,6 +50,7 @@ class BrandSerializer(serializers.ModelSerializer):
 
 class BrandRetrieveSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True)
+    brand_data = AddressSerializer(source="*")
 
     class Meta:
         model = Brand
@@ -62,6 +65,7 @@ class CharacteristicSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     characteristics = serializers.SerializerMethodField()
+    brand_data = AddressSerializer(source="category.brand")
 
     class Meta:
         model = Product

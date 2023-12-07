@@ -1,8 +1,21 @@
+from django import forms
+
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from .models import Product, Characteristic, Brand, Category
+
+
+## FORMS
+class BrandAdminForm(forms.ModelForm):
+    class Meta:
+        model = Brand
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].required = True
 
 
 class CharacteristicInline(admin.TabularInline):
@@ -56,6 +69,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
     list_display = ['name', 'logo_preview', 'category']
+    form = BrandAdminForm
 
     def logo_preview(self, obj):
         return mark_safe(
