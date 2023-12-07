@@ -31,6 +31,7 @@ class ProductShotsSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     shots = ProductShotsSerializer(many=True)
+    brand_data = AddressSerializer(source="brand")
 
     class Meta:
         model = Product
