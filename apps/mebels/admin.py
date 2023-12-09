@@ -29,7 +29,7 @@ class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
     fieldsets = [
         ('Основные информации продукта', {
-            'fields': ['brend', 'name', 'arkon_url', 'is_album'],
+            'fields': ['brand', 'name', 'arkon_url', 'is_album'],
         }),
         ('Изображение в главном меню', {
             'fields': ['image', 'image_preview'],
