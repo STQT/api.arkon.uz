@@ -20,11 +20,15 @@ class CategoriesSerializer(serializers.ModelSerializer):
 
 
 class CategoriesRetrieveSerializer(serializers.ModelSerializer):
-    products = ProductListSerializer(many=True)
+    filtered_products = serializers.SerializerMethodField()
 
     class Meta:
         model = Categories
         fields = "__all__"
+
+    def get_filtered_products(self, obj):
+        products = obj.products.filter(hide=False)
+        return ProductListSerializer(products, many=True).data
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -37,12 +41,20 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class BrandRetrieveSerializer(serializers.ModelSerializer):
-    categories = CategoriesSerializer(many=True)
-    products = ProductListSerializer(many=True)
+    filtered_categories = serializers.SerializerMethodField()
+    filtered_products = serializers.SerializerMethodField()
 
     class Meta:
         model = Brand
         fields = "__all__"
+
+    def get_filtered_categories(self, obj):
+        categories = obj.categories.filter(hide=False)
+        return CategoriesSerializer(categories, many=True).data
+
+    def get_filtered_products(self, obj):
+        products = obj.products.filter(hide=False)
+        return ProductListSerializer(products, many=True).data
 
 
 class CharacteristicSerializer(serializers.ModelSerializer):

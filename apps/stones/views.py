@@ -2,13 +2,13 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import generics
 
-from apps.stones.models import Product, Brand, Category, Characteristic, Categories
+from apps.stones.models import Product, Brand, Characteristic, Categories
 from apps.stones.serializers import ProductSerializer, BrandRetrieveSerializer, BrandSerializer, \
     CategoriesRetrieveSerializer
 
 
 class ProductAPIRetrieveView(generics.RetrieveAPIView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related('brand', 'category__brand')
     serializer_class = ProductSerializer
 
 
@@ -18,7 +18,7 @@ class BrandRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class BrandListAPIView(generics.ListAPIView):
-    queryset = Brand.objects.all()
+    queryset = Brand.objects.filter(hide=False)
     serializer_class = BrandSerializer
     filterset_fields = ("category_id",)
 
