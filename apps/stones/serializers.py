@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Characteristic, Category, Brand
+from .models import Product, Characteristic, Brand, Categories
 from ..utils.serializers import AddressSerializer
 
 
@@ -8,23 +8,23 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        exclude = ("arkon_url", "category")
+        exclude = ("arkon_file", "category")
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategoriesSerializer(serializers.ModelSerializer):
     image_thumbnail = serializers.ImageField()
 
     class Meta:
-        model = Category
+        model = Categories
         fields = "__all__"
 
 
-class CategoryRetrieveSerializer(serializers.ModelSerializer):
+class CategoriesRetrieveSerializer(serializers.ModelSerializer):
     products = ProductListSerializer(many=True)
     brand_data = AddressSerializer(source="brand")
 
     class Meta:
-        model = Category
+        model = Categories
         fields = "__all__"
 
 
@@ -49,7 +49,7 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class BrandRetrieveSerializer(serializers.ModelSerializer):
-    categories = CategorySerializer(many=True)
+    categories = CategoriesSerializer(many=True)
     brand_data = AddressSerializer(source="*")
     products = ProductListSerializer(many=True)
 

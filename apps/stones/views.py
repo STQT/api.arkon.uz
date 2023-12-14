@@ -4,7 +4,7 @@ from rest_framework import generics
 
 from apps.stones.models import Product, Brand, Category, Characteristic, Categories
 from apps.stones.serializers import ProductSerializer, BrandRetrieveSerializer, BrandSerializer, \
-    CategoryRetrieveSerializer
+    CategoriesRetrieveSerializer
 
 
 class ProductAPIRetrieveView(generics.RetrieveAPIView):
@@ -23,9 +23,9 @@ class BrandListAPIView(generics.ListAPIView):
     filterset_fields = ("category_id",)
 
 
-class CategoryRetrieveAPIView(generics.RetrieveAPIView):
-    queryset = Category.objects.select_related("brand")
-    serializer_class = CategoryRetrieveSerializer
+class CategoriesRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Categories.objects.select_related("brand")
+    serializer_class = CategoriesRetrieveSerializer
 
 
 def duplicate_product(request, product_id):
