@@ -3,9 +3,10 @@ from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField
 
 from apps.categories.models import Category
+from apps.utils.models import BaseModel
 
 
-class Brand(models.Model):
+class Brand(BaseModel):
     name = models.CharField("Название", max_length=100)
     phone = models.CharField("Телефон", max_length=50, default="+998712020020")
     address = models.CharField("Адрес", max_length=50, default="6A Лабзак, Ташкент")
@@ -34,7 +35,7 @@ class Brand(models.Model):
         return self.name
 
 
-class Category(models.Model):
+class Category(BaseModel):
     brand = models.ForeignKey(Brand, verbose_name="Бренд", related_name="categories", on_delete=models.CASCADE)
     name = models.CharField(verbose_name="Название", max_length=100)
     image = models.ImageField(verbose_name="Изображение", upload_to="stones/categories")
@@ -50,8 +51,11 @@ class Category(models.Model):
         return self.name
 
 
-class Product(models.Model):
+class Product(BaseModel):
     category = models.ForeignKey(Category, verbose_name="Модель", on_delete=models.CASCADE, related_name="products")
+    brand = models.ForeignKey(Brand, verbose_name="Бренд", on_delete=models.SET_NULL, null=True, blank=True,
+                              help_text="Если продукт не имеет модели, вы можете указать бренд",
+                              related_name="products")
     name = models.CharField(verbose_name="Название", max_length=100)
     image = models.ImageField(verbose_name="Изображение", upload_to="stones/products")
     image_thumbnail = ImageSpecField(source='image',
@@ -65,6 +69,21 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductShots(models.Model):
+    product = models.ForeignKey(Product, verbose_name="Продукт", on_delete=models.CASCADE, related_name="shots")  # noqa
+    image = models.ImageField(verbose_name="Изображение", upload_to="stones/product_shots")
+    image_thumbnail = ImageSpecField(source='image',
+                                     format='JPEG',
+                                     options={'quality': 60})
+
+    class Meta:
+        verbose_name = "Изображение продукта "
+        verbose_name_plural = "Изображения продукта "
+
+    def __str__(self):
+        return self.product.name
 
 
 class Characteristic(models.Model):

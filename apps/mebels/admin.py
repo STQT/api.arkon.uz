@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .forms import ProductShotsForm, ProductAdminForm, CustomProductShotsInlineFormSet
+from .forms import ProductShotsForm, CustomProductShotsInlineFormSet
 from .models import Product, Brand, ProductShots
 
 
@@ -26,7 +26,6 @@ class ProductShotsInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductShotsInline]
-    form = ProductAdminForm
     fieldsets = [
         ('Основные информации продукта', {
             'fields': ['brand', 'name', 'arkon_url', 'is_album'],

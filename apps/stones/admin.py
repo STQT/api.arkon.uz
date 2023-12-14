@@ -4,7 +4,8 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from .models import Product, Characteristic, Brand, Category
+from .forms import ProductShotsForm, CustomProductShotsInlineFormSet
+from .models import Product, Characteristic, Brand, Category, ProductShots
 
 
 ## FORMS
@@ -18,6 +19,13 @@ class BrandAdminForm(forms.ModelForm):
         self.fields['category'].required = True
 
 
+class ProductShotsInline(admin.TabularInline):
+    model = ProductShots
+    form = ProductShotsForm
+    formset = CustomProductShotsInlineFormSet
+    extra = 1
+
+
 class CharacteristicInline(admin.TabularInline):
     model = Characteristic
     extra = 1
@@ -25,7 +33,7 @@ class CharacteristicInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [CharacteristicInline]
+    inlines = [CharacteristicInline, ProductShotsInline]
     list_display = ('name', 'arkon_url', 'image_preview', 'tools_column')
     actions = ['duplicate_product']
     save_as = True

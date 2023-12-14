@@ -1,13 +1,11 @@
 from django import forms
 from django.forms import BaseInlineFormSet
-from django.utils.safestring import mark_safe
 
-from apps.mebels.models import ProductShots
-from apps.stones.models import Product
+from apps.stones.models import ProductShots
 
 
 class ImagePreviewWidget(forms.widgets.ClearableFileInput):
-    template_name = 'mebels/widgets/image_preview_widget.html'  # Create a template for the widget
+    template_name = 'stones/widgets/image_preview_widget.html'  # Create a template for the widget
 
 
 
@@ -31,13 +29,6 @@ class ProductShotsForm(forms.ModelForm):
         if image_preview:
             self.instance.image = image_preview
         return super().save(commit=commit)
-
-
-class ProductAdminForm(forms.ModelForm):
-    class Meta:
-        model = Product
-        fields = '__all__'
-
 
 
 class CustomProductShotsInlineFormSet(BaseInlineFormSet):

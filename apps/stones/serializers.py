@@ -51,6 +51,7 @@ class BrandSerializer(serializers.ModelSerializer):
 class BrandRetrieveSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True)
     brand_data = AddressSerializer(source="*")
+    products = ProductListSerializer(many=True)
 
     class Meta:
         model = Brand
