@@ -9,6 +9,7 @@ from apps.utils.models import BaseModel
 class Brand(BaseModel):
     name = models.CharField("Название", max_length=100)
     slogan = models.CharField("Слоган", max_length=100)
+    icon = models.ImageField("Иконка в поиске", upload_to="brands/icons")
     phone = models.CharField("Телефон", max_length=50, default="+998712020020")
     address = models.CharField("Адрес", max_length=50, default="6A Лабзак, Ташкент")
     email = models.EmailField("E-mail для связи", default="example@email.com")

@@ -453,7 +453,7 @@ JAZZMIN_SETTINGS = {
     "use_google_fonts_cdn": True,
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
-    "changeform_format": "single",
+    "changeform_format": "collapsible",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
     # Add a language dropdown into the admin
