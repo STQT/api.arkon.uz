@@ -8,7 +8,7 @@ from apps.stones.serializers import ProductSerializer, BrandRetrieveSerializer, 
 
 
 class ProductAPIRetrieveView(generics.RetrieveAPIView):
-    queryset = Product.objects.select_related('brand', 'category__brand')
+    queryset = Product.objects.select_related('brand', 'category__brand').prefetch_related("shots", "characteristics")
     serializer_class = ProductSerializer
 
 

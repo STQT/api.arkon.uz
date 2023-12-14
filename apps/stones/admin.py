@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from .forms import ProductShotsForm, CustomProductShotsInlineFormSet
+from .forms import ProductShotsForm, CustomProductShotsInlineFormSet, ProductAdminForm
 from .models import Product, Characteristic, Brand, Categories, ProductShots
 from ..utils.admin import BaseAdmin
 
@@ -35,6 +35,7 @@ class CharacteristicInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(BaseAdmin):
     inlines = [CharacteristicInline, ProductShotsInline]
+    form = ProductAdminForm
     list_display = ('name', 'image_preview', 'category', 'brand', 'tools_column')
     list_filter = ['brand', 'category']
     list_display_links = ["name", "image_preview", "category", "brand"]

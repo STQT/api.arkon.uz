@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import BaseInlineFormSet
 
-from apps.stones.models import ProductShots
+from apps.stones.models import ProductShots, Product
 
 
 class ImagePreviewWidget(forms.widgets.ClearableFileInput):
@@ -43,3 +43,20 @@ class CustomProductShotsInlineFormSet(BaseInlineFormSet):
             instance.save()
 
         return instance
+
+
+class ProductAdminForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+    def clean(self):
+        cleaned_data = super().clean()
+        category = cleaned_data.get('category')
+        brand = cleaned_data.get('brand')
+
+        if category and brand:
+            raise forms.ValidationError("Выберите либо Модель либо Бренд")
+
+        if category is None and brand is None:
+            raise forms.ValidationError("Вам нужно указать либо Модель либо Бренд для корректной работы")

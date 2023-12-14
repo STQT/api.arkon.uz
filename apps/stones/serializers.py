@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Characteristic, Brand, Categories
+from .models import Product, Characteristic, Brand, Categories, ProductShots
 from ..utils.serializers import AddressSerializer
 
 
@@ -63,13 +63,27 @@ class CharacteristicSerializer(serializers.ModelSerializer):
         fields = ['name', 'value']
 
 
+class ProductShotsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductShots
+        fields = "__all__"
+
+
 class ProductSerializer(serializers.ModelSerializer):
     characteristics = serializers.SerializerMethodField()
-    brand_data = AddressSerializer(source="category.brand")
+    brand_data = serializers.SerializerMethodField()
+    shots = ProductShotsSerializer(many=True)
 
     class Meta:
         model = Product
         fields = "__all__"
+
+    def get_brand_data(self, obj):
+        if obj.brand:
+            return AddressSerializer(obj.brand, many=False).data
+        elif obj.category:
+            return AddressSerializer(obj.category.brand, many=False).data
+        return None
 
     def get_characteristics(self, obj):
         characteristics_by_type = {

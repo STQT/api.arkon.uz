@@ -53,7 +53,8 @@ class Categories(BaseModel):
 
 
 class Product(BaseModel):
-    category = models.ForeignKey(Categories, verbose_name="Модель", on_delete=models.CASCADE, related_name="products")
+    category = models.ForeignKey(Categories, verbose_name="Модель", on_delete=models.SET_NULL, null=True, blank=True,
+                                 related_name="products")
     brand = models.ForeignKey(Brand, verbose_name="Бренд", on_delete=models.SET_NULL, null=True, blank=True,
                               help_text="Если продукт не имеет модели, вы можете указать бренд",
                               related_name="products")
