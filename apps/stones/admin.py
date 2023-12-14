@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from .forms import ProductShotsForm, CustomProductShotsInlineFormSet
-from .models import Product, Characteristic, Brand, Category, ProductShots
+from .models import Product, Characteristic, Brand, Categories, ProductShots
+from ..utils.admin import BaseAdmin
 
 
 ## FORMS
@@ -32,30 +33,14 @@ class CharacteristicInline(admin.TabularInline):
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(BaseAdmin):
     inlines = [CharacteristicInline, ProductShotsInline]
-    list_display = ('name', 'arkon_url', 'image_preview', 'tools_column')
+    list_display = ('name', 'image_preview', 'category', 'brand', 'tools_column')
+    list_filter = ['brand', 'category']
+    list_display_links = ["name", "image_preview", "category", "brand"]
+    search_fields = ['name', 'brand__name', 'category__name']
     actions = ['duplicate_product']
     save_as = True
-
-    def tools_column(self, obj):
-        html_tag = '<a href="{0}" class="btn btn-primary">Клонировать</a> '
-
-        return mark_safe(
-            html_tag.format(
-                reverse('duplicate_stones_product', args=[obj.pk]), )
-        )
-
-    tools_column.short_description = 'Инструменты'
-    tools_column.allow_tags = True
-
-    def image_preview(self, obj):
-        return mark_safe(
-            f'<img src="{obj.image.url}" width="200"/>'  # if obj.image else '<div>Rasmsiz</div>'
-        )
-
-    image_preview.short_description = 'Фото'
-    image_preview.allow_tags = True
 
     def duplicate_product(self, request, queryset):
         for product in queryset:
@@ -75,8 +60,11 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 @admin.register(Brand)
-class BrandAdmin(admin.ModelAdmin):
-    list_display = ['name', 'logo_preview', 'category']
+class BrandAdmin(BaseAdmin):
+    list_display = ['name', 'category', 'logo_preview', 'image_preview', 'tools_column']
+    list_filter = ['category']
+    list_display_links = ['name', 'logo_preview', 'category']
+    search_fields = ['name', 'category__name']
     form = BrandAdminForm
 
     def logo_preview(self, obj):
@@ -84,18 +72,13 @@ class BrandAdmin(admin.ModelAdmin):
             f'<img src="{obj.logo.url}" width="200"/>'  # if obj.logo_light else '<div>Rasmsiz</div>'
         )
 
-    logo_preview.short_description = 'Фото'
+    logo_preview.short_description = 'Логотип'
     logo_preview.allow_tags = True
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'image_preview']
-
-    def image_preview(self, obj):
-        return mark_safe(
-            f'<img src="{obj.image.url}" width="200"/>'  # if obj.image else '<div>Rasmsiz</div>'
-        )
-
-    image_preview.short_description = 'Фото'
-    image_preview.allow_tags = True
+@admin.register(Categories)
+class CategoriesAdmin(BaseAdmin):
+    list_display = ['name', 'brand', 'image_preview', 'tools_column']
+    list_display_links = ['name', 'image_preview', 'tools_column']
+    search_fields = ['name', 'brand__name']
+    list_filter = ['brand']

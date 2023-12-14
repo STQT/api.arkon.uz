@@ -35,7 +35,7 @@ class Brand(BaseModel):
         return self.name
 
 
-class Category(BaseModel):
+class Categories(BaseModel):
     brand = models.ForeignKey(Brand, verbose_name="Бренд", related_name="categories", on_delete=models.CASCADE)
     name = models.CharField(verbose_name="Название", max_length=100)
     image = models.ImageField(verbose_name="Изображение", upload_to="stones/categories")
@@ -61,7 +61,6 @@ class Product(BaseModel):
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
                                      options={'quality': 60})
-    arkon_url = models.CharField(verbose_name="Ссылка на AR", max_length=255)
 
     class Meta:
         verbose_name = "Продукт "

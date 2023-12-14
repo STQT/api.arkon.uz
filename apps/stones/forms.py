@@ -8,7 +8,6 @@ class ImagePreviewWidget(forms.widgets.ClearableFileInput):
     template_name = 'stones/widgets/image_preview_widget.html'  # Create a template for the widget
 
 
-
 class ProductShotsForm(forms.ModelForm):
     image_preview = forms.ImageField(widget=ImagePreviewWidget(attrs={'readonly': True, 'disabled': True}),
                                      required=False, label="Предосмотр")

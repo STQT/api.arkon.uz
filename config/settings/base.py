@@ -90,8 +90,6 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "apps.users",
     "apps.stones",
-    "apps.mebels",
-    "apps.houses",
     "apps.categories",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
