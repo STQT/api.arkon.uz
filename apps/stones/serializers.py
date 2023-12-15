@@ -28,7 +28,7 @@ class CategoriesRetrieveSerializer(serializers.ModelSerializer):
 
     def get_filtered_products(self, obj):
         products = obj.products.filter(hide=False)
-        return ProductListSerializer(products, self.context, many=True).data
+        return ProductListSerializer(products, context=self.context, many=True).data
 
 
 class BrandSerializer(serializers.ModelSerializer):
