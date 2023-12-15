@@ -37,6 +37,23 @@ class Brand(BaseModel):
         return self.name
 
 
+class BrandSocials(models.Model):
+    class SocialsChoices(models.TextChoices):
+        FB = "fb", "Facebook"
+        TG = "tg", "Telegram"
+        IG = "ig", "Instagram"
+        TW = "tw", "Twitter"
+        YT = "yt", "Youtube"
+
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="socials")
+    link = models.URLField(verbose_name="Ссылка")
+    type = models.CharField(choices=SocialsChoices.choices, default=SocialsChoices.FB, max_length=2)
+
+    class Meta:
+        verbose_name = "Ссылка соц сети"
+        verbose_name_plural = "Ссылки соц сетей"
+
+
 class Categories(BaseModel):
     brand = models.ForeignKey(Brand, verbose_name="Бренд", related_name="categories", on_delete=models.CASCADE)
     name = models.CharField(verbose_name="Название", max_length=100)

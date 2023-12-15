@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Characteristic, Brand, Categories, ProductShots
+from .models import Product, Characteristic, Brand, Categories, ProductShots, BrandSocials
 from ..utils.serializers import AddressSerializer
 
 
@@ -40,9 +40,16 @@ class BrandSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class BrandSocialsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BrandSocials
+        fields = ("link", "type")
+
+
 class BrandRetrieveSerializer(serializers.ModelSerializer):
     filtered_categories = serializers.SerializerMethodField()
     filtered_products = serializers.SerializerMethodField()
+    socials = BrandSocialsSerializer(many=True)
 
     class Meta:
         model = Brand
