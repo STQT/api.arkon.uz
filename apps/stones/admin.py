@@ -41,7 +41,6 @@ class ProductAdmin(BaseAdmin):
     list_display_links = ["name", "image_preview", "category", "brand"]
     search_fields = ['name', 'brand__name', 'category__name']
     actions = ['duplicate_product']
-    save_as = True
 
     def duplicate_product(self, request, queryset):
         for product in queryset:

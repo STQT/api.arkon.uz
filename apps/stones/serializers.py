@@ -50,11 +50,11 @@ class BrandRetrieveSerializer(serializers.ModelSerializer):
 
     def get_filtered_categories(self, obj):
         categories = obj.categories.filter(hide=False)
-        return CategoriesSerializer(categories, many=True).data
+        return CategoriesSerializer(categories, context=self.context, many=True).data
 
     def get_filtered_products(self, obj):
         products = obj.products.filter(hide=False)
-        return ProductListSerializer(products, many=True).data
+        return ProductListSerializer(products, context=self.context, many=True).data
 
 
 class CharacteristicSerializer(serializers.ModelSerializer):
