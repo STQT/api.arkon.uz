@@ -28,7 +28,7 @@ class CategoriesRetrieveSerializer(serializers.ModelSerializer):
 
     def get_filtered_products(self, obj):
         products = obj.products.filter(hide=False)
-        return ProductListSerializer(products, many=True).data
+        return ProductListSerializer(products, self.context, many=True).data
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -80,9 +80,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_brand_data(self, obj):
         if obj.brand:
-            return AddressSerializer(obj.brand, many=False).data
+            return AddressSerializer(obj.brand, context=self.context, many=False).data
         elif obj.category:
-            return AddressSerializer(obj.category.brand, many=False).data
+            return AddressSerializer(obj.category.brand, context=self.context, many=False).data
         return None
 
     def get_characteristics(self, obj):
