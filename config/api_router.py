@@ -19,6 +19,7 @@ urlpatterns = router.urls
 
 urlpatterns += [
     path("stones/product/<int:pk>/", stone_views.ProductAPIRetrieveView.as_view()),
+    path("countries/", stone_views.CountryListView.as_view()),
     path("stones/brand-list/", stone_views.BrandListAPIView.as_view()),
     path("stones/brand/<int:pk>/", stone_views.BrandRetrieveAPIView.as_view()),
     path("stones/category/<int:pk>/", stone_views.CategoriesRetrieveAPIView.as_view()),

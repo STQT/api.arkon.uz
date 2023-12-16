@@ -1,10 +1,26 @@
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import generics
+from django_countries.data import COUNTRIES
+from rest_framework.response import Response
 
 from apps.stones.models import Product, Brand, Characteristic, Categories
-from apps.stones.serializers import ProductSerializer, BrandRetrieveSerializer, BrandSerializer, \
-    CategoriesRetrieveSerializer
+from apps.stones.serializers import (ProductSerializer, BrandRetrieveSerializer, BrandSerializer,
+                                     CategoriesRetrieveSerializer, CountryListSerializer)
+
+
+class CountryListView(generics.ListAPIView):
+    serializer_class = CountryListSerializer
+
+    def get_queryset(self):
+        country_codes = Brand.objects.filter(hide=False).values_list('country', flat=True).distinct()
+        countries_data = [{'code': code, 'name': name} for code, name in COUNTRIES.items() if code in country_codes]
+        return countries_data
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class ProductAPIRetrieveView(generics.RetrieveAPIView):
@@ -20,7 +36,11 @@ class BrandRetrieveAPIView(generics.RetrieveAPIView):
 class BrandListAPIView(generics.ListAPIView):
     queryset = Brand.objects.filter(hide=False)
     serializer_class = BrandSerializer
-    filterset_fields = ("category_id",)
+    filterset_fields = {
+        "category_id": ("exact",),
+        "name": ("icontains",),
+        "country": ("exact", )
+    }
 
 
 class CategoriesRetrieveAPIView(generics.RetrieveAPIView):
@@ -40,7 +60,6 @@ def duplicate_product(request, product_id):
         characteristic.product_id = product.id
         characteristic.save()
     return redirect(reverse('admin:stones_product_changelist'))
-
 
 
 modelClass = {

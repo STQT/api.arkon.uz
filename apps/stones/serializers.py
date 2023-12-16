@@ -1,3 +1,4 @@
+from django_countries import Countries
 from rest_framework import serializers
 from .models import Product, Characteristic, Brand, Categories, ProductShots, BrandSocials
 from ..utils.serializers import AddressSerializer
@@ -19,6 +20,11 @@ class CategoriesSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class CountryListSerializer(serializers.Serializer):
+    code = serializers.CharField()
+    name = serializers.CharField()
+
+
 class CategoriesRetrieveSerializer(serializers.ModelSerializer):
     filtered_products = serializers.SerializerMethodField()
 
@@ -37,7 +43,7 @@ class BrandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Brand
-        fields = "__all__"
+        exclude = ("created_at", "updated_at", "hide", "phone")
 
 
 class BrandSocialsSerializer(serializers.ModelSerializer):

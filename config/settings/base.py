@@ -85,6 +85,7 @@ THIRD_PARTY_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     "django_filters",
+    "django_countries",
 ]
 
 LOCAL_APPS = [

@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django_countries.fields import CountryField
 from imagekit.models import ImageSpecField
 
 from apps.categories.models import Category
@@ -19,7 +20,8 @@ class Brand(BaseModel):
     category = models.ForeignKey(Category, verbose_name="Категория", related_name="brands",
                                  null=True, blank=True,
                                  on_delete=models.SET_NULL)
-    description = RichTextField(verbose_name="Описание")
+    country = CountryField(default="UZ")
+    description = RichTextField(verbose_name="Описание", null=True, blank=True)
     logo = models.ImageField(verbose_name="Логотип", upload_to="stones/brand")
     logo_thumbnail = ImageSpecField(source='logo',
                                     format='PNG',
