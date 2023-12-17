@@ -23,10 +23,13 @@ class BaseAdmin(admin.ModelAdmin):
         delete_html_text = '<a href="{0}" class="btn btn-danger">Удалить</a>'.format(
             reverse('actions:delete', args=[obj.pk, view_obj])  # delete
         )
+        show_html_text = '<a href="{0}" class="btn btn-info">Посмотреть</a>'.format(
+            reverse('actions:show', args=[obj.pk, view_obj])  # delete
+        )
         html_tag = (
             '<a href="{0}" class="btn btn-secondary">Клонировать</a> '  # clone
         ).format(reverse('actions:clone', args=[obj.pk, view_obj]))
-        html_text = hider_html_text + html_tag + delete_html_text
+        html_text = hider_html_text + html_tag + show_html_text + delete_html_text
         return mark_safe(html_text)
 
     tools_column.short_description = 'Инструменты'
