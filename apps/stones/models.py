@@ -46,6 +46,7 @@ class BrandSocials(models.Model):
         IG = "ig", "Instagram"
         TW = "tw", "Twitter"
         YT = "yt", "Youtube"
+        WA = "wa", "Whatsapp"
 
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="socials")
     link = models.URLField(verbose_name="Ссылка")
