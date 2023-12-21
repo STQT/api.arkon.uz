@@ -24,4 +24,5 @@ urlpatterns += [
     path("stones/brand/<int:pk>/", stone_views.BrandRetrieveAPIView.as_view()),
     path("stones/category/<int:pk>/", stone_views.CategoriesRetrieveAPIView.as_view()),
     path("categories/", category_views.CategoryAPIListView.as_view()),
+    path('all-locations/', stone_views.AllLocationsListView.as_view(), name='all-locations-list'),
 ]

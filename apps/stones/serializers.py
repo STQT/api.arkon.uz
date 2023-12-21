@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Characteristic, Brand, Categories, ProductShots, BrandSocials
+from .models import Product, Characteristic, Brand, Categories, ProductShots, BrandSocials, BrandLocations
 from ..utils.serializers import AddressSerializer
 
 
@@ -7,6 +7,15 @@ class BrandSocialsSerializer(serializers.ModelSerializer):
     class Meta:
         model = BrandSocials
         fields = ("link", "type")
+
+
+class BrandLocationsSerializer(serializers.ModelSerializer):
+    icon = serializers.ImageField(source="brand.icon")
+    name = serializers.CharField(source="brand.name")
+
+    class Meta:
+        model = BrandLocations
+        exclude = ("id",)
 
 
 class ProductListSerializer(serializers.ModelSerializer):

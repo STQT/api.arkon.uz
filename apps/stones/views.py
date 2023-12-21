@@ -4,9 +4,9 @@ from rest_framework import generics
 from django_countries.data import COUNTRIES
 from rest_framework.response import Response
 
-from apps.stones.models import Product, Brand, Characteristic, Categories
+from apps.stones.models import Product, Brand, Characteristic, Categories, BrandLocations
 from apps.stones.serializers import (ProductSerializer, BrandRetrieveSerializer, BrandSerializer,
-                                     CategoriesRetrieveSerializer, CountryListSerializer)
+                                     CategoriesRetrieveSerializer, CountryListSerializer, BrandLocationsSerializer)
 
 modelClass = {
     "product": Product,
@@ -52,6 +52,11 @@ class BrandListAPIView(generics.ListAPIView):
 class CategoriesRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Categories.objects.select_related("brand")
     serializer_class = CategoriesRetrieveSerializer
+
+
+class AllLocationsListView(generics.ListAPIView):
+    queryset = BrandLocations.objects.select_related("brand")
+    serializer_class = BrandLocationsSerializer
 
 
 def duplicate_product(request, product_id):

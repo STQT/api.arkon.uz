@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from .forms import ProductShotsForm, CustomProductShotsInlineFormSet, ProductAdminForm
-from .models import Product, Characteristic, Brand, Categories, ProductShots, BrandSocials
+from .models import Product, Characteristic, Brand, Categories, ProductShots, BrandSocials, BrandLocations
 from ..utils.admin import BaseAdmin
 
 
@@ -29,6 +29,11 @@ class ProductShotsInline(admin.TabularInline):
 
 class BrandSocialsInline(admin.TabularInline):
     model = BrandSocials
+    extra = 1
+
+
+class BrandLocationsInline(admin.TabularInline):
+    model = BrandLocations
     extra = 1
 
 
@@ -71,7 +76,7 @@ class BrandAdmin(BaseAdmin):
     list_display_links = ['name', 'logo_preview', 'category']
     search_fields = ['name', 'category__name']
     form = BrandAdminForm
-    inlines = [BrandSocialsInline]
+    inlines = [BrandSocialsInline, BrandLocationsInline]
 
     def logo_preview(self, obj):
         return mark_safe(

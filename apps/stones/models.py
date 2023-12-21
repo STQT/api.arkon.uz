@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from ckeditor.fields import RichTextField
 from django_countries.fields import CountryField
@@ -55,6 +56,16 @@ class BrandSocials(models.Model):
     class Meta:
         verbose_name = "Ссылка соц сети"
         verbose_name_plural = "Ссылки соц сетей"
+
+
+class BrandLocations(models.Model):
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="locations")
+    long = models.FloatField("Долгота", validators=[MinValueValidator(-180), MaxValueValidator(180)])
+    lat = models.FloatField("Широта", validators=[MinValueValidator(-90), MaxValueValidator(90)])
+
+    class Meta:
+        verbose_name = "Локация бренда"
+        verbose_name_plural = "Локации бренда"
 
 
 class Categories(BaseModel):
