@@ -1,7 +1,12 @@
-from django_countries import Countries
 from rest_framework import serializers
 from .models import Product, Characteristic, Brand, Categories, ProductShots, BrandSocials
 from ..utils.serializers import AddressSerializer
+
+
+class BrandSocialsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BrandSocials
+        fields = ("link", "type")
 
 
 class ProductListSerializer(serializers.ModelSerializer):
@@ -27,10 +32,15 @@ class CountryListSerializer(serializers.Serializer):
 
 class CategoriesRetrieveSerializer(serializers.ModelSerializer):
     filtered_products = serializers.SerializerMethodField()
+    brand_data = AddressSerializer(source="brand")
+    socials = serializers.SerializerMethodField()
 
     class Meta:
         model = Categories
         fields = "__all__"
+
+    def get_socials(self, obj):
+        return BrandSocialsSerializer(obj.brand.socials, context=self.context, many=True).data
 
     def get_filtered_products(self, obj):
         products = obj.products.filter(hide=False)
@@ -44,12 +54,6 @@ class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
         exclude = ("created_at", "updated_at", "hide", "phone")
-
-
-class BrandSocialsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BrandSocials
-        fields = ("link", "type")
 
 
 class BrandRetrieveSerializer(serializers.ModelSerializer):
@@ -86,6 +90,7 @@ class ProductSerializer(serializers.ModelSerializer):
     characteristics = serializers.SerializerMethodField()
     brand_data = serializers.SerializerMethodField()
     shots = ProductShotsSerializer(many=True)
+    socials = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -96,6 +101,13 @@ class ProductSerializer(serializers.ModelSerializer):
             return AddressSerializer(obj.brand, context=self.context, many=False).data
         elif obj.category:
             return AddressSerializer(obj.category.brand, context=self.context, many=False).data
+        return None
+
+    def get_socials(self, obj):
+        if obj.brand:
+            return BrandSocialsSerializer(obj.brand.socials, context=self.context, many=True).data
+        elif obj.category:
+            return BrandSocialsSerializer(obj.category.brand.socials, context=self.context, many=True).data
         return None
 
     def get_characteristics(self, obj):
