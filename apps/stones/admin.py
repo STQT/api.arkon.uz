@@ -71,10 +71,11 @@ class ProductAdmin(BaseAdmin):
 
 @admin.register(Brand)
 class BrandAdmin(BaseAdmin):
-    list_display = ['name', 'category', 'logo_preview', 'image_preview', 'tools_column']
+    list_display = ['name', 'category', 'logo_preview', 'image_preview', 'order', 'tools_column']
     list_filter = ['category']
     list_display_links = ['name', 'logo_preview', 'category']
     search_fields = ['name', 'category__name']
+    list_editable = ['order']
     form = BrandAdminForm
     inlines = [BrandSocialsInline, BrandLocationsInline]
 

@@ -40,7 +40,7 @@ class BrandRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class BrandListAPIView(generics.ListAPIView):
-    queryset = Brand.objects.filter(hide=False)
+    queryset = Brand.objects.filter(hide=False).order_by('order', 'pk')
     serializer_class = BrandSerializer
     filterset_fields = {
         "category_id": ("exact",),

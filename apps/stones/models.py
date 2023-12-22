@@ -31,6 +31,7 @@ class Brand(BaseModel):
     image_thumbnail = ImageSpecField(source='image',
                                      format='JPEG',
                                      options={'quality': 60})
+    order = models.IntegerField(verbose_name="Порядок в списке", default=0)
 
     class Meta:
         verbose_name = "Бренд "
