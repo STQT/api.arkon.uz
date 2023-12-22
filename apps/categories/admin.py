@@ -6,8 +6,9 @@ from apps.categories.models import Category
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'image_preview', 'hide']
+    list_display = ['name', 'image_preview', 'order', 'hide']
     list_display_links = ['name', 'image_preview']
+    list_editable = ['order']
 
     def image_preview(self, obj):
         return mark_safe(

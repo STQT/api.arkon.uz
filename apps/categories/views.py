@@ -5,5 +5,5 @@ from apps.categories.serializers import CategorySerializer
 
 
 class CategoryAPIListView(ListAPIView):
-    queryset = Category.objects.filter(hide=False)
+    queryset = Category.objects.filter(hide=False).order_by('order')
     serializer_class = CategorySerializer
