@@ -59,6 +59,7 @@ class CategoriesRetrieveSerializer(serializers.ModelSerializer):
 class BrandSerializer(serializers.ModelSerializer):
     logo_thumbnail = serializers.ImageField()
     image_thumbnail = serializers.ImageField()
+    socials = BrandSocialsSerializer(many=True)
 
     class Meta:
         model = Brand
