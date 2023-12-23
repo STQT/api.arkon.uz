@@ -15,18 +15,27 @@ modelClass = {
     "brand": Brand
 }
 
+from django_countries.fields import Country
+
+def get_english_country_names(country_codes):
+    english_country_names = {}
+    for code in country_codes:
+        english_country_names[code] = Country(code).name
+    return english_country_names
+
 
 class CountryListView(generics.ListAPIView):
     serializer_class = CountryListSerializer
 
     def get_queryset(self):
         country_codes = Brand.objects.filter(hide=False).values_list('country', flat=True).distinct()
-        countries_data = [{'code': code, 'name': Country(code).name} for code in country_codes]
-        return countries_data
+        return country_codes
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
+        english_country_names = get_english_country_names(queryset)
+        countries_data = [{'code': code, 'name': english_country_names[code]} for code in queryset]
+        serializer = self.get_serializer(countries_data, many=True)
         return Response(serializer.data)
 
 
