@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import generics
 from django_countries.data import COUNTRIES
+from django_countries.fields import Country
 from rest_framework.response import Response
 
 from apps.stones.models import Product, Brand, Characteristic, Categories, BrandLocations
@@ -20,7 +21,7 @@ class CountryListView(generics.ListAPIView):
 
     def get_queryset(self):
         country_codes = Brand.objects.filter(hide=False).values_list('country', flat=True).distinct()
-        countries_data = [{'code': code, 'name': name} for code, name in COUNTRIES.items() if code in country_codes]
+        countries_data = [{'code': code, 'name': Country(code).name} for code in country_codes]
         return countries_data
 
     def list(self, request, *args, **kwargs):
