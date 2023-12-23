@@ -12,7 +12,7 @@ class Brand(BaseModel):
     name = models.CharField("Название", max_length=100)
     slogan = models.CharField("Слоган", max_length=100)
     icon = models.ImageField("Иконка в поиске", upload_to="brands/icons")
-    phone = models.IntegerField("Телефон", max_length=50, default=991979899,
+    phone = models.IntegerField("Телефон", default=991979899,
                                 help_text="Образец: 991979899")
     address = models.CharField("Адрес", max_length=50, default="6A Лабзак, Ташкент")
     email_support = models.CharField("Официальный сайт", default="example.com", max_length=100)
