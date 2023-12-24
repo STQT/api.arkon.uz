@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Product, Characteristic, Brand, Categories, ProductShots, BrandSocials, BrandLocations
+from ..categories.models import Table
 from ..utils.serializers import AddressSerializer
 
 
@@ -87,7 +88,7 @@ class BrandRetrieveSerializer(serializers.ModelSerializer):
 class CharacteristicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Characteristic
-        fields = ['name', 'value']
+        fields = ['name', 'value', 'type']
 
 
 class ProductShotsSerializer(serializers.ModelSerializer):
@@ -121,17 +122,17 @@ class ProductSerializer(serializers.ModelSerializer):
         return None
 
     def get_characteristics(self, obj):
-        characteristics_by_type = {
-            "main": [],
-            "standart": [],
-            "test": []
-        }
+        characteristics_data = obj.characteristics.all()
 
-        for characteristic in obj.characteristics.all():
-            type_key = characteristic.type
-            if type_key not in characteristics_by_type:
-                characteristics_by_type[type_key] = []
+        characteristics_by_table = {}
 
-            characteristics_by_type[type_key].append(CharacteristicSerializer(characteristic).data)
+        for characteristic in characteristics_data:
+            table_name = characteristic.type.name
+            if table_name not in characteristics_by_table:
+                characteristics_by_table[table_name] = {"table_name": table_name, "is_show": True, "data": []}
 
-        return characteristics_by_type
+            characteristics_by_table[table_name]["data"].append(CharacteristicSerializer(characteristic).data)
+
+        non_empty_tables = [data for data in characteristics_by_table.values() if data["data"]]
+
+        return non_empty_tables

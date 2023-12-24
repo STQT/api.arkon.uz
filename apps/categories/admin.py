@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from apps.categories.models import Category
+from apps.categories.models import Category, Table
 
 
 @admin.register(Category)
@@ -17,3 +17,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
     image_preview.short_description = 'Фото'
     image_preview.allow_tags = True
+
+
+@admin.register(Table)
+class CategoriesAdmin(admin.ModelAdmin):
+    ...

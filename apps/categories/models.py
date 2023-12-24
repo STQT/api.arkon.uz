@@ -13,3 +13,15 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Table(models.Model):
+    name = models.CharField("Название таблицы", max_length=100)
+    is_show = models.BooleanField("Показать?", default=True)
+
+    class Meta:
+        verbose_name = "Таблица"
+        verbose_name_plural = "Таблицы"
+
+    def __str__(self):
+        return self.name

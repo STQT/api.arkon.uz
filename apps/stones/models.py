@@ -141,14 +141,7 @@ class ProductShots(models.Model):
 
 
 class Characteristic(models.Model):
-    class CharacteristicTypeChoices(models.TextChoices):
-        MAIN = "main", "Основные характеристики"
-        STANDART = "standart", "Стандарты"
-        TEST = "test", "Характерестики тестов"
-
-    type = models.CharField(max_length=10,
-                            choices=CharacteristicTypeChoices.choices,
-                            default=CharacteristicTypeChoices.MAIN)
+    type = models.ForeignKey("categories.Table", on_delete=models.CASCADE, related_name='characteristics')
     name = models.CharField(max_length=100, verbose_name="Название")
     value = models.CharField(max_length=100, verbose_name="Значение")
     product = models.ForeignKey(Product, related_name='characteristics', on_delete=models.CASCADE)
