@@ -129,7 +129,9 @@ class ProductSerializer(serializers.ModelSerializer):
         for characteristic in characteristics_data:
             table_name = characteristic.type.name
             if table_name not in characteristics_by_table:
-                characteristics_by_table[table_name] = {"table_name": table_name, "is_show": True, "data": []}
+                characteristics_by_table[table_name] = {"table_name": table_name,
+                                                        "is_show": characteristic.type.is_show,
+                                                        "data": []}
 
             characteristics_by_table[table_name]["data"].append(CharacteristicSerializer(characteristic).data)
 
