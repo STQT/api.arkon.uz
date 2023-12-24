@@ -9,13 +9,14 @@ from apps.stones.models import Product, Brand, Characteristic, Categories, Brand
 from apps.stones.serializers import (ProductSerializer, BrandRetrieveSerializer, BrandSerializer,
                                      CategoriesRetrieveSerializer, CountryListSerializer, BrandLocationsSerializer)
 
+from django_countries.fields import Country
+
 modelClass = {
     "product": Product,
     "categories": Categories,
     "brand": Brand
 }
 
-from django_countries.fields import Country
 
 def get_english_country_names(country_codes):
     english_country_names = {}

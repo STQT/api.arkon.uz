@@ -9,7 +9,12 @@ class BaseModel(models.Model):
     hide = models.BooleanField(default=False, verbose_name="Скрыть?")
     arkon_file = models.FileField(
         default=None, null=True, blank=True,
-        verbose_name="Файл AR", help_text="Укажите файл AR, если в текущей странице нужно отображать AR")
+        verbose_name="Файл AR Iphone",
+        help_text="Укажите файл AR для iPhone, если в текущей странице нужно отображать AR")
+    arkon_file_android = models.FileField(
+        default=None, null=True, blank=True,
+        verbose_name="Файл AR Android", help_text="Укажите файл AR для других устройств, "
+                                                  "если в текущей странице нужно отображать AR")
 
     class Meta:
         abstract = True
