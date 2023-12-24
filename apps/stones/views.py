@@ -51,7 +51,7 @@ class BrandRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class BrandListAPIView(generics.ListAPIView):
-    queryset = Brand.objects.filter(hide=False).order_by('order', 'pk')
+    queryset = Brand.objects.prefetch_related("socials").filter(hide=False).order_by('order', 'pk')
     serializer_class = BrandSerializer
     filterset_fields = {
         "category_id": ("exact",),

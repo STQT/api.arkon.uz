@@ -122,7 +122,7 @@ class ProductSerializer(serializers.ModelSerializer):
         return None
 
     def get_characteristics(self, obj):
-        characteristics_data = obj.characteristics.all()
+        characteristics_data = obj.characteristics.select_related("type")
 
         characteristics_by_table = {}
 
