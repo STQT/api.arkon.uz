@@ -10,7 +10,6 @@ from apps.utils.models import BaseModel
 
 class Brand(BaseModel):
     name = models.CharField("Название", max_length=100)
-    name_color = models.CharField("Цвет названия", max_length=10, default="#FFFFFF")
     slogan = models.CharField("Слоган", max_length=100)
     slogan_color = models.CharField("Цвет слогана", max_length=10, default="#FFFFFF")
     phone = models.IntegerField("Телефон", default=991979899,
